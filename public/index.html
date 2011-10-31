@@ -1,0 +1,42 @@
+﻿<html>
+    <head>
+      <title>Quotable</title>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+      <script type="text/javascript">
+          window.fbAsyncInit = function () {
+              FB.init({
+                  appId: '288254061199958',
+                  status: true,
+                  cookie: true,
+                  xfbml: true
+              });
+
+              FB.api('/me', function (response) {
+                  //alert('Your name is ' + JSON.stringify(response));
+              });
+          };
+
+          (function (d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) { return; }
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=288254061199958";
+              fjs.parentNode.insertBefore(js, fjs);
+          } (document, 'script', 'facebook-jssdk'));
+
+          $(document).ready(function () {
+              $('#btLogout').click(function () {
+                  alert(FB);
+                  FB.logout(function (response) {
+                      
+                  });
+              });
+          });
+       </script>
+    </head>
+    <body>
+     <div id="fb-root"></div>      
+     <div class="fb-login-button" data-show-faces="true" data-width="200" data-max-rows="1" data-perms="email"></div>      
+        <div><a href="#" id="btLogout">Logout</a></div>
+    </body>
+ </html>

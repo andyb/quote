@@ -1,11 +1,22 @@
-var restify = require("restify"), utils = require("./utils"), models = require("./models"), db = require("./db"), log = require("./log")
+var restify = require("restify"), utils = require("./utils"), models = require("./models"), db = require("./db"), log = require("./log"), static = require('node-static');
 
 module.exports = {
     start: function () {
+        var file = new (static.Server)('./');
         var server = restify.createServer({
+            accept: ["text/xml", "text/html", "application/xhtml+xml", "text/plain", "*/*;q=0.8", "image/png", "image/*;q=0.8", "*/*;q=0.5"]
+        });
+
+        server.get('/public/:fileName', function (req, res) {
+            console.log("SERVING FILE");
+            file.serve(req, res);
         });
 
         server.get('/', function (req, res) {
+            file.serveFile('public/index.html', 200, {}, req, res);
+        });
+
+        server.get('/quotes', function (req, res) {
             try {
                 db.connect();
                 models.Quote.find({
